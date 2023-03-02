@@ -11,7 +11,9 @@ import warnings
 import re
 import plotly.graph_objects as go
 import nltk
-
+from string import punctuation
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+import matplotlib.pyplot as plt
 
 nltk.download('all')
 
@@ -24,9 +26,43 @@ nltk.download('all')
 # key = 'streamlit/informes_FIDCs_2023-02-14.csv'
 # bucket = 'data-science-laqus'
 
+
+# =========  APP
+
+# Set the app title
+st.title("Garantias")
+st.write(
+    """
+    Análise das garantias da Jusbrasil  (https://www.jusbrasil.com.br/jurisprudencia/busca?q=cess%C3%A3o+fiduci%C3%A1ria+receb%C3%ADveis)
+    """
+)
+
+
+stopwords = stopwords = set(nltk.corpus.stopwords.words('portuguese') + list(punctuation))
+
 # df = pd.read_csv(s3.open(f'{bucket}/{key}', mode='rb'))
 df = pd.read_parquet('Garantias_20230302.parquet')
-st.write(df)
+Header = df['Header'].loc[0]
+Body = df['Body'].loc[0]
+wordcloud = WordCloud(stopwords=stopwords,
+                      background_color="black",
+                      width=1600, height=800).generate(Body)
+Img = wordcloud.to_image()
+
+
+# create figure
+fig = plt.figure(figsize=(20, 15))
+  
+# setting values to rows and column variables
+rows = 1
+columns = 1
+
+# Adds a subplot at the 1st position
+fig.add_subplot(rows, columns, 1)
+print(Header)
+print(Body)
+plt.imshow(Img)
+# st.write(df)
 
 # df_plot = df.copy()
 # df_plot = df_plot.sort_values(by='Carteira',ascending=False).iloc[:50,:].drop_duplicates()
