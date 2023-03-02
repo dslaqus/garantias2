@@ -59,9 +59,10 @@ columns = 1
 
 # Adds a subplot at the 1st position
 fig.add_subplot(rows, columns, 1)
-print(Header)
-print(Body)
-plt.imshow(Img)
+
+st.write(Header)
+st.write(Body)
+st.image(Img)
 # st.write(df)
 
 # df_plot = df.copy()
