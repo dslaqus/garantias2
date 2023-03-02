@@ -50,15 +50,6 @@ wordcloud = WordCloud(stopwords=stopwords,
 Img = wordcloud.to_image()
 
 
-# create figure
-fig = plt.figure(figsize=(20, 15))
-  
-# setting values to rows and column variables
-rows = 1
-columns = 1
-
-# Adds a subplot at the 1st position
-fig.add_subplot(rows, columns, 1)
 
 st.write(Header)
 st.write(Body)
