@@ -42,18 +42,21 @@ stopwords = stopwords = set(nltk.corpus.stopwords.words('portuguese') + list(pun
 
 # df = pd.read_csv(s3.open(f'{bucket}/{key}', mode='rb'))
 df = pd.read_parquet('Garantias_20230302.parquet')
-Header = df['Header'].loc[0]
-Body = df['Body'].loc[0]
-wordcloud = WordCloud(stopwords=stopwords,
-                      background_color="black",
-                      width=1600, height=800).generate(Body)
-Img = wordcloud.to_image()
+
+for i in df.index.tolist():
+    
+    Header = df['Header'].loc[i]
+    Body = df['Body'].loc[i]
+    wordcloud = WordCloud(stopwords=stopwords,
+                        background_color="black",
+                        width=1600, height=800).generate(Body)
+    Img = wordcloud.to_image()
 
 
 
-st.write(Header)
-st.write(Body)
-st.image(Img)
+    st.write(Header)
+    st.write(Body)
+    st.image(Img)
 # st.write(df)
 
 # df_plot = df.copy()
